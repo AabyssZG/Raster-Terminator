@@ -15,9 +15,8 @@
 
 ## 2#使用方式
 
-**目前，该项目已经更新至1.1版本，分为单文件版和整合版**
+**目前，该项目已经更新至1.1版本，脚本参数如下：**
 
-脚本参数如下：
 ```
 >python3 Raster-Terminator.py -h
 usage: Raster-Terminator.py [-h] [-x XCOORDINATE] [-y YCOORDINATE] [-i IMAGEOUT]
