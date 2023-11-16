@@ -6,6 +6,8 @@
 
 对于光栅图的提取和爆破，比较麻烦，比赛的时候还要一个一个尝试，我就萌生了一个碰撞脚本的想法
 
+本文参考我的博客文章，食用更佳：[https://blog.zgsec.cn/archives/504.html](https://blog.zgsec.cn/archives/504.html)
+
 本项目的特点：
 - 适配性高，能方便运行于Python3环境
 - 操作简单，适合CTFer上手，可自动化通过碰撞获取隐写内容
