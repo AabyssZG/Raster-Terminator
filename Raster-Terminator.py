@@ -29,6 +29,14 @@ def ImageRead(imagename):
     print('[+] 图片长为：{} \n[+] 图片宽为：{}'.format(width, height))
     return width, height
 
+def del_file(path):
+    for root, dirs, files in os.walk(path, topdown=False):
+        for name in files:
+            os.remove(os.path.join(root, name))
+        for name in dirs:
+            os.rmdir(os.path.join(root, name))
+    os.rmdir(path)
+
 def Folder():
     if os.path.exists("./output"):
         print(f"[.] 输出文件夹已经存在，无需创建")
@@ -67,41 +75,56 @@ def Operations(width,height,x,y):
 def ImageWrite(x,y,imagename):
     x,y = int(x),int(y)
     img = np.array(Image.open(imagename))
-    if x != 0:
+    img_array = np.array(img)
+
+    # 检查图片为彩色还是灰度
+    if len(img_array.shape) ==2 :
+        # 灰度图像
+        for i in range(x):
+            print('[+] 正在输出第 {} 张图片'.format(i+1))
+            z = np.zeros_like(img)
+            z[:, i::x] = img[:, i::x]
+            imgnew = Image.fromarray(z)
+            imgnew.save('./output/{}-{}.png'.format(x,i+1))
+    elif len(img_array.shape) == 3:
+        # 彩色图像
         for i in range(x):
             print('[+] 正在输出第 {} 张图片'.format(i+1))
             z = np.zeros_like(img)
             z[:, i::x, :] = img[:, i::x, :]
             imgnew = Image.fromarray(z)
             imgnew.save('./output/{}-{}.png'.format(x,i+1))
-        print('[+] 文件写入完毕，请查收！')
     else:
+        print('[-] 出现色彩通道错误，请排查')
+
+    print('[+] 文件写入完毕，请查收！')
+
+def ImageOut(x,y,imagename):
+    x,y = int(x),int(y)
+    img = np.array(Image.open(imagename))
+    img_array = np.array(img)
+
+    # 检查图片为彩色还是灰度
+    if len(img_array.shape) ==2 :
+        # 灰度图像
+        for i in range(y):
+            print('[+] 正在输出第 {} 张图片'.format(i+1))
+            z = np.zeros_like(img)
+            z[i::y, :] = img[i::y, :]
+            imgnew = Image.fromarray(z)
+            imgnew.save('./output/{}-{}.png'.format(y,i+1))
+    elif len(img_array.shape) == 3:
+        # 彩色图像
         for i in range(y):
             print('[+] 正在输出第 {} 张图片'.format(i+1))
             z = np.zeros_like(img)
             z[i::y, :, :] = img[i::y, :, :]
             imgnew = Image.fromarray(z)
             imgnew.save('./output/{}-{}.png'.format(y,i+1))
-        print('[+] 文件写入完毕，请查收！')
-
-def ImageOut(x,y,imagename):
-    x,y = int(x),int(y)
-    img = np.array(Image.open(imagename))
-    if x:
-        for i in range(x):
-            print('[+] 正在输出第 {} 张图片'.format(i+1))
-            z = np.zeros_like(img)
-            z[:, i::x, :] = img[:, i::x, :]
-            Image.fromarray(z).show()
-        print('[+] 输出完毕，请查收！')
     else:
-        for i in range(y):
-            print('[+] 正在输出第 {} 张图片'.format(i+1))
-            z = np.zeros_like(img)
-            z[i::y, :, :] = img[i::y, :, :]
-            Image.fromarray(z).show()
-        print('[+] 输出完毕，请查收！')
+        print('[-] 出现色彩通道错误，请排查')
 
+    print('[+] 文件写入完毕，请查收！')
 
 if __name__ == '__main__':
     title()
